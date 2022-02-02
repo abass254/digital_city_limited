@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12 m6 l6 card-width">
+                        <div class="col s12 m6 l3 card-width">
                           <div class="card border-radius-6">
                             <div class="card-content center-align">
                               <i class="material-icons amber-text small-ico-bg mb-5">timeline</i>
@@ -61,7 +61,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col s12 m6 l6 card-width">
+                        <div class="col s12 m6 l3 card-width">
                           <div class="card border-radius-6">
                             <div class="card-content center-align">
                               <i class="material-icons amber-text small-ico-bg mb-5">attach_money</i>

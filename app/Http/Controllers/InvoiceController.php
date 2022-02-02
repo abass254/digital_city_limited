@@ -304,7 +304,10 @@ class InvoiceController extends Controller
         $invoice = Invoice::findorFail($id);
 
         $sales = DB::table('product_details')
-           ->join('invoice_details', 'product_details.id', '=', 'invoice_details.prod_id')->join('invoices', 'invoices.id', '=', 'invoice_details.inv_id')->join('transactions', 'invoices.trans_id', '=', 'transactions.id')
+           ->join('invoice_details', 'product_details.id', '=', 'invoice_details.prod_id')
+           ->join('invoices', 'invoices.id', '=', 'invoice_details.inv_id')
+           ->join('transactions', 'invoices.trans_id', '=', 'transactions.id')
+           ->join('invoice_payments', 'invoices.id', 'invoice_payments.inv_id')
            ->select(
                DB::RAW('product_details.id AS id'),
                DB::RAW('product_details.code AS item_code'),
@@ -314,6 +317,7 @@ class InvoiceController extends Controller
                DB::RAW('invoice_details.quantity AS qty'),
                DB::RAW('invoice_details.price AS price'),
                DB::RAW('invoice_details.total_amount AS total'),
+               DB::RAW('sum(invoice_payments.amount_paid) AS amount_paid'),
                DB::RAW('invoices.id AS inv_id'),
                DB::RAW('invoices.code AS receipt_code'),
                DB::RAW('invoices.process_status AS status'),
@@ -484,25 +488,15 @@ class InvoiceController extends Controller
 
     }
 
-    public function test(){
+    public function test($date){
 
-        $cash_trans = new CashTransaction();
-        $cash_trans_all = $cash_trans::where('t_no', 'LIKE', '%TRS-INV-%')->get();
-
-        $lastInvoiceID = $ord->orderBy('id', 'desc')->pluck('id')->first();
-        $orderCodes = 'QUOT-' . str_pad($lastInvoiceID + 1, 4, "0", STR_PAD_LEFT);
-
-         
-        $old_code = $cash_trans_all->first()->t_no;
-
-        $i = 0;
-
-        while($i < 5){
-
-            $new_code = $old_code . '-' . $i++; 
-        }
         
-        return $new_code;
+
+        $date = new \DateTime($date);
+        $now = new \DateTime();
+        $interval = $now->diff($date);
+
+        return $interval->y;
 
     }
 }

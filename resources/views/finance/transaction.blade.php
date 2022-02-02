@@ -26,10 +26,17 @@
                         <h3>Cash Statement</h3>
                         <table class="display bordered" id="page-ength-option">
                             <thead>@foreach($month as $month_info)
-                                <tr> <th colspan="6"><b><center><b class="green-text">In the Month of {{ date("F", mktime(0, 0, 0, $month_info['summary']['month'], 1)) }}, {{ $month_info['summary']['year']}}</b></center></b></td></tr>
+                                <tr> <th colspan="6"><b><center><b class="green-text">{{ $month_info['summary']['month'] }}/{{ $month_info['summary']['date'] }}/{{ $month_info['summary']['year'] }}</b></center></b></td></tr>
+
+                                <tr class="red-text">
+                                    <td colspan="3"><b>Total</b> </td>
+                                    <td><b>{{ number_format($month_info['summary']['t_debit'], 2)}}</b></td>
+                                    <td><b>{{ number_format($month_info['summary']['t_credit'], 2) }}</b></td>
+                                    <td><b>{{ number_format($month_info['summary']['t_balance'], 2) }}</b></td>
+                                </tr>
                             <tr class="cyan-text">
                                 <th data-field="id">Transaction Code</th>
-                                <th data-field="name">Date</th>
+                                <th data-field="name">Time</th>
                                 <th data-field="price">Description</th>
                                 <th>Debit (Db)</th>
                                 <th>Credit (Cr)</th>
@@ -48,13 +55,8 @@
                                 <tr>
                              @endforeach
                              {{-- Totals --}}
-                             <tr class="red-text">
-                                <td colspan="3"><b>Total</b> </td>
-                                <td><b>{{ number_format($month_info['summary']['t_debit'], 2)}}</b></td>
-                                <td><b>{{ number_format($month_info['summary']['t_credit'], 2) }}</b></td>
-                                <td><b>{{ number_format($month_info['summary']['t_balance'], 2) }}</b></td>
-                             </tr>
-                            
+                             
+                            <tr colspan="6"></tr>
                             @endforeach
                         </tbody> 
                         </table>
@@ -74,23 +76,65 @@
 
 
 @section('js')
-<!-- <script src="../../../app-assets/vendors/data-tables/js/jquery.dataTables.min.js"></script>
+<script src="../../../app-assets/vendors/data-tables/js/jquery.dataTables.min.js"></script>
 <script src="../../../app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../../app-assets/vendors/data-tables/js/dataTables.select.min.js"></script> -->
+<script src="../../../app-assets/vendors/data-tables/js/dataTables.select.min.js"></script>
 
 <!-- JavaScript Bundle with Popper -->
 
 
-<!-- <script type="text/javascript">
+ <script type="text/javascript">
     $(document).ready(function (){
-        $('#page-length-option').DataTable({
-            "responsive": true,
-            "lengthMenu": [
-              [10, 25, 50, -1],
-              [10, 25, 50, "All"]
-            ]
-          });
+        var tbl = $(".data-list-view").DataTable({
+        responsive: false,
+        columnDefs: [
+            {
+            orderable: true,
+            targets: [0],
+            className: "dt-nowrap",
+            checkboxes: { selectRow: true }
+            },{
+            orderable: false,
+            className: "dt-nowrap",
+            targets: [1,3,6,8,9]
+            }
+        ],
+        dom:
+            '<"top"<"actions action-btns"B><"action-filters"lf>><"clear">rt<"bottom"<"actions">p>',
+        oLanguage: {
+            sLengthMenu: "_MENU_",
+            sSearch: ""
+        },
+        aLengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+        select: {
+            style: "multi"
+        },
+        order: [[2, "asc"]],
+        bInfo: false,
+        pageLength: 25,
+        buttons: [
+            {
+            text: "<i class='feather icon-plus'></i> Add Corporate",
+            action: function() {
+                $(this).removeClass("btn-secondary");
+                NewCorporate();
+            },
+            className: "btn-outline-danger"
+            }
+        ],
+        initComplete: function(settings, json) {
+            $(".dt-buttons .btn").removeClass("btn-secondary")
+        }
+        });
+
+        tbl.on('draw.dt', function(){
+            setTimeout(function(){
+                if (navigator.userAgent.indexOf("Mac OS X") != -1) {
+                $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
+                }
+            }, 50);
+            });
     })
-</script> -->
+</script>
 
 @endsection

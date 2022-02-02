@@ -139,6 +139,10 @@ License: You must have a valid license purchased only from themeforest(the above
                             <li class="display-flex justify-content-between">
                                 <span class="invoice-subtotal-title">Total Amount</span>
                                 <h6 class="invoice-subtotal-value red-text">Ksh.{{ number_format($sales->first()->total_amount, 2) }}</h6>
+                            </li>
+                            <li class="display-flex justify-content-between">
+                                <span class="invoice-subtotal-title">Amount Paid</span>
+                                <h6 class="invoice-subtotal-value indigo-text">Ksh.{{ number_format($sales->first()->amount_paid, 2) }}</h6>
                             </li>   
                             </ul>
                         </div>
@@ -158,7 +162,12 @@ License: You must have a valid license purchased only from themeforest(the above
             <button onclick="window.print()" class="btn waves-effect waves-light btn indigo" type="submit" name="action">Print
                 <i class="material-icons right">print</i>
             </button>
-            <a class="waves-effect waves-light btn red modal-trigger" href="#modal1">Invoice Payment</a>
+            @if($sales->first()->amount_paid < $sales->first()->total_amount)
+                <a class="waves-effect waves-light btn red modal-trigger" href="#modal1">Invoice Payment</a>
+            
+
+            @endif
+            
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
                 <div class="modal-content">

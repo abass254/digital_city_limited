@@ -22,22 +22,24 @@ class TransactionController extends Controller
 
         $cash_trans = CashTransaction::select(
             DB::RAW('t_no'), 
+            DB::RAW("DATE_FORMAT(created_at,'%d') as date"),
             DB::RAW("DATE_FORMAT(created_at,'%m') as month"),
             DB::RAW("DATE_FORMAT(created_at, '%y') as year"),
-            DB::RAW("t_date"),
+            DB::RAW("TIME(created_at) as t_date"),
             DB::RAW('t_description'),
             DB::RAW('t_debit'),
             DB::RAW('t_credit'), 
             DB::RAW('t_balance'))
-            ->orderBy('month', 'DESC')
+            ->orderBy('date', 'DESC')->orderBy('t_date', 'DESC')
             ->get()
-            ->groupBy('month')->map(function($month_info) {
-                $month = $month_info->map(function($the_month) { return $the_month['month']; })->first();
+            ->groupBy('date')->map(function($month_info) {
+                $date = $month_info->map(function($the_date) { return $the_date['month']; })->first();
+                $month = $month_info->map(function($the_month) { return $the_month['date']; })->first();
                 $year = $month_info->map(function($the_year) { return $the_year['year']; })->first();
                 $sum_balance = $month_info->map(function($the_balance) { return $the_balance['t_balance']; })->sum();
                 $sum_debit = $month_info->map(function($the_debit) { return $the_debit['t_debit']; })->sum();
                 $sum_credit = $month_info->map(function($the_credit) {return $the_credit['t_credit']; })->sum();
-                return [ "transactions" => $month_info, "summary" => ['t_debit'=>$sum_debit, 't_credit' => $sum_credit, 'month' => $month, 'year' => $year, 't_balance' => $sum_balance]];
+                return [ "transactions" => $month_info, "summary" => ['t_debit'=>$sum_debit, 't_credit' => $sum_credit, 'month' => $month, 'date' => $date, 'year' => $year, 't_balance' => $sum_balance]];
             });
 
     //return $cash_trans;

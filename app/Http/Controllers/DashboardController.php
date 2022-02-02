@@ -58,6 +58,8 @@ class DashboardController extends Controller
 
         $diff_in_sales = $current_total_sales - $previous_total_sales;
 
+        
+
         $sales_perc_change = round($diff_in_sales * 100/ $current_total_sales, 2);
 
         //profits
@@ -68,11 +70,20 @@ class DashboardController extends Controller
 
         $todays_profit = $profit_today->first()->total_sales;
 
-        $yesterday_profit =  $profit_yesterday ->first()->total_sales;
+        if($profit_yesterday ->first()->total_sales == 0){
+          $yesterday_profit =  1;
+        }
 
-        $diff_in_profit = $todays_profit - $yesterday_profit  ;
+        else{
+          $yesterday_profit =  $profit_yesterday ->first()->total_sales;
+        }
 
-        $profit_perc_change = round($diff_in_profit * 100/ $yesterday_profit, 2);
+        
+
+        $diff_in_profit = $todays_profit - $yesterday_profit;
+
+          $profit_perc_change = round($diff_in_profit * 100/ $yesterday_profit, 2);
+        
 
         //product entities
 
