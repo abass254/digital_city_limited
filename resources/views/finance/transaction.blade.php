@@ -10,6 +10,8 @@
 <!--Import materialize.css-->
 <!-- CSS only -->
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+
 
 
 @section('content')
@@ -23,18 +25,18 @@
                 <div class="card">
 
                     <div class="card-content">
-                        <h3>Cash Statement</h3>
-                        <table class="display bordered" id="page-ength-option">
+                        <h4>Cash Flow</h4>
+                        <table class="display bordered" id="page-length-option">
                             <thead>@foreach($month as $month_info)
                                 <tr> <th colspan="6"><b><center><b class="green-text">{{ $month_info['summary']['month'] }}/{{ $month_info['summary']['date'] }}/{{ $month_info['summary']['year'] }}</b></center></b></td></tr>
 
-                                <tr class="red-text">
+                                <tr class="black white-text">
                                     <td colspan="3"><b>Total</b> </td>
                                     <td><b>{{ number_format($month_info['summary']['t_debit'], 2)}}</b></td>
                                     <td><b>{{ number_format($month_info['summary']['t_credit'], 2) }}</b></td>
                                     <td><b>{{ number_format($month_info['summary']['t_balance'], 2) }}</b></td>
                                 </tr>
-                            <tr class="cyan-text">
+                            <tr class="red-text">
                                 <th data-field="id">Transaction Code</th>
                                 <th data-field="name">Time</th>
                                 <th data-field="price">Description</th>
@@ -79,6 +81,7 @@
 <script src="../../../app-assets/vendors/data-tables/js/jquery.dataTables.min.js"></script>
 <script src="../../../app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../../app-assets/vendors/data-tables/js/dataTables.select.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
 
 <!-- JavaScript Bundle with Popper -->
 
@@ -135,6 +138,10 @@
             }, 50);
             });
     })
+
+    $(document).ready( function () {
+        $('#page-length-option').DataTable();
+    } );
 </script>
 
 @endsection

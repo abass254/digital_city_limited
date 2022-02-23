@@ -20,6 +20,7 @@ class CreateCashTransactionsTable extends Migration
             $table->string('t_description');
             $table->string('t_debit');
             $table->string('t_credit');
+            $table->string('t_by');
             $table->string('t_balance');
             $table->timestamps();
         });

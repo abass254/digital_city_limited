@@ -44,6 +44,9 @@ Route::resource('purchase','App\Http\Controllers\PurchaseController');
 
 
 Route::get('/products_list', '\App\Http\Controllers\ProductController@getAllProducts')->name('products_list');
+Route::get('/stores', '\App\Http\Controllers\StoreController@index')->name('stores');
+Route::get('/edit_stores/{id}', '\App\Http\Controllers\StoreController@edit')->name('edit_stores');
+Route::put('/update_stores/{id}', '\App\Http\Controllers\StoreController@update')->name('store.update');
 Route::get('/cash_sale', '\App\Http\Controllers\QuotationController@cashSalePage')->name('cash_sale');
 Route::get('/dispatch', '\App\Http\Controllers\StockController@dispatchView')->name('dispatch');
 Route::post('/dispatch', '\App\Http\Controllers\StockController@storeDispatch')->name('store_dispatch');

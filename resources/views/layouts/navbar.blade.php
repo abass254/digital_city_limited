@@ -1,6 +1,6 @@
 <header class="page-topbar" id="header">
         <div class="navbar navbar-fixed">
-            <nav class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark gradient-45deg-amber-amber no-shadow">
+            <nav class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark gradient-45deg-indigo-indigo no-shadow">
                 <div class="nav-wrapper">
                     <ul class="left">
                         <li>
@@ -12,7 +12,7 @@
                         <ul class="search-list collection display-none"></ul>
                     </div>
                     <ul class="navbar-list right">
-                        <li>{{Auth::user()->name}}</li>
+                        <li>{{ $user->name}} - {{ $user->store }}</li>
                         <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="material-icons">power_settings_new</i></a></li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -55,11 +55,13 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="formsTables"><i class="material-icons">group</i><span><span class="dropdown-title" data-i18n="Templates">User Management</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
+                        <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="formsTables"><i class="material-icons">group</i><span><span class="dropdown-title" data-i18n="Templates">Management</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
                             <ul class="dropdown-content dropdown-horizontal-list" id="formsTables">
                                 <li><a href="{{ route('staff.index') }}"><span data-i18n="Modern Menu">Staff Management</span></a>
                                   </li>
                                   <li class=""><a class="" href="{{ route('client.index') }}"><span data-i18n="Analytics">Client Management</span></a>
+                                  </li>
+                                  <li class=""><a class="" href="{{ route('stores') }}"><span data-i18n="Analytics">Stores Management</span></a>
                                   </li>
                                 
                             </ul>
@@ -76,11 +78,12 @@
                                 <li class=""><a class="" href="{{route('dispatch')}}"><span data-i18n="Analytics">Dispatch Products</span></a>
                                 </li>
                                 <!-- a view where admins views all pending dispatches -->
-                                <li class=""><a class="" href="{{route('pending_dispatches')}}"><span data-i18n="Analytics">Pending Dispatches</span></a>
+                                <li class=""><a class="" href="{{route('pending_dispatches')}}"><span data-i18n="Analytics">Pending Dispatches</span><span class="badge badge pill white-text red float-right">{{ $dispatches->first()->total }}</span></a>
                                 </li>
                                 <!-- a view for confirming all the dispatches from your store -->
-                                <li class=""><a class="" href="{{route('confirm_dispatch')}}"><span data-i18n="Analytics">Confirm Dispatches</span></a>
+                                <li class=""><a class="" href="{{route('confirm_dispatch')}}"><span data-i18n="Analytics">Confirm Disp.</span></a>
                                 </li>
+                               
 
                                 
                             </ul>
@@ -92,18 +95,18 @@
                                 <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdownSub-menu" href="Javascript:void(0)" data-target="formsDropdown"><span data-i18n="Forms">Quotations</span><i class="material-icons right">chevron_right</i></a>
                                     <ul class="dropdown-content dropdown-horizontal-list" id="formsDropdown">
                                         <li><a href="{{  route('quot_page')}}"><span data-i18n="Modern">Create Quotations</span></a>
-                                        <li data-menu=""><a href="{{  route('view_quots')}}"><span data-i18n="Form Select2">View Quotations</span></a></li>
+                                        <li data-menu=""><a href="{{  route('view_quots')}}"><span data-i18n="Form Select2">View Quotations</span><span class="badge badge pill white-text red mr-10">{{ $pending_quotations }}</span></a></li>
                                         
                                     </ul>
                                 </li>
                                 <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdownSub-menu" href="Javascript:void(0)" data-target="formDropdown"><span data-i18n="Forms">Invoices</span><i class="material-icons right">chevron_right</i></a>
                                     <ul class="dropdown-content dropdown-horizontal-list" id="formDropdown">
                                         <li><a href="{{  route('create_invoices')}}"><span data-i18n="Modern">Create Invoices</span></a>
-                                        <li data-menu=""><a href="{{  route('view_invoices')}}"><span data-i18n="Form Select2">View Invoices</span></a></li>
+                                        <li data-menu=""><a href="{{  route('view_invoices')}}"><span data-i18n="Form Select2">View Invoices</span><span class="badge badge pill white-text red mr-10">{{ $pending_invoices }}</span></a></li>
                                         
                                     </ul>
                                 </li>
-                                <li><a href="{{route('view_cashsale_rec')}}"><span data-i18n="Modern">View Cash Sale Receipts</span></a>
+                                <li><a href="{{route('view_cashsale_rec')}}"><span data-i18n="Modern">View Cash Sale Receipts</span><span class="badge badge pill white-text blue mr-10">{{ $cash_sales }}</span></a>
                               </li>
                                 
                             </ul>

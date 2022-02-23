@@ -13,8 +13,12 @@
                         <div class="col s12 m6 l4">
                             <div class="card animate fadeLeft">
                             <div class="card-content #c62828 red darken-3 white-text">
-                                <p class="card-stats-title">Total Sales</p>
+                                <p class="card-stats-title">Net Sales</p>
+                                @if(Auth::user()->is_special == 1)
                                 <h4 class="card-stats-number white-text">Ksh. {{ number_format($gross_sales) }}</h4>
+                                @else
+                                <h4 class="card-stats-number white-text">Ksh. {{ number_format($sales_per_store->total) }}</h4>
+                                @endif
                             </div>
                             <div class="card-action #c62828 red darken-3">
                                 <div id="sales-compositebar" class="center-align"></div>
@@ -45,37 +49,86 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12 m6 l3 card-width">
+                       <div class="col l5"><div class="col s12 m6 l6 card-width">
                           <div class="card border-radius-6">
                             <div class="card-content center-align">
                               <i class="material-icons amber-text small-ico-bg mb-5">timeline</i>
                               <h4 class="m-0"><b>Ksh. {{ number_format($current_total_sales) }}</b></h4>
-                              <p>Sales(this month)</p>
+                              <p>Total Cash Sales</p>
                               @if($sales_perc_change > 0)
                               <p class="green-text  mt-3"><i class="material-icons vertical-align-middle">arrow_drop_up</i>
-                                {{ abs($sales_perc_change) }}%</p>
+                                {{ abs($sales_perc_change) }}%</p><br/>
+                              @elseif($sales_perc_change < 0)
+                              <p class="red-text  mt-3"><span></span><i class="material-icons vertical-align-middle">arrow_drop_down</i>
+                                {{ abs($sales_perc_change) }}%</p><br/>
                               @else
-                              <p class="red-text  mt-3"><i class="material-icons vertical-align-middle">arrow_drop_down</i>
-                                {{ abs($sales_perc_change) }}%</p>
+                              <p class="orange-text  mt-3"><span></span><i class="material-icons vertical-align-middle">remove</i>
+                                {{ abs($sales_perc_change) }}%</p><br/>
                               @endif
+                                <p>from last month</p>
                             </div>
                           </div>
                         </div>
-                        <div class="col s12 m6 l3 card-width">
+                        <div class="col s12 m6 l6 card-width">
                           <div class="card border-radius-6">
                             <div class="card-content center-align">
                               <i class="material-icons amber-text small-ico-bg mb-5">attach_money</i>
                               <h4 class="m-0"><b>Ksh. {{ number_format($todays_profit)}}</b></h4>
-                              <p>Profit(today)</p>
+                              <p>Total Profit</p>
                               @if($profit_perc_change > 0)
                               <p class="green-text  mt-3"><i class="material-icons vertical-align-middle">arrow_drop_up</i>
-                                {{ abs($profit_perc_change) }}%</p>
-                              @else
+                                {{ round(abs($profit_perc_change), 2) }}%</p>
+                              @elseif($profit_perc_change < 0)
                               <p class="red-text  mt-3"><i class="material-icons vertical-align-middle">arrow_drop_down</i>
-                                {{ abs($profit_perc_change) }}%</p>
+                                {{ round(abs($profit_perc_change), 2) }}%</p>
+                              @else
+                              <p class="orange-text  mt-3"><i class="material-icons vertical-align-middle">remove</i>
+                                {{ round(abs($profit_perc_change), 2) }}%</p>
                               @endif
+                              <br/><p>from yesterday</p>
                             </div>
                           </div>
+                        </div></div>
+                        
+                        <div class="col l7">
+                          <ul id="projects-collection" class="collection z-depth-1 animate fadeLeft">
+                            <li class="collection-item avatar">
+                                <i class="material-icons red circle">stars</i>
+                                <h6 class="collection-header m-0">Top Selling Items</h6>
+                                <p>All Times</p>
+                            </li>
+                            <table class="striped responsive-table ml-4 mr-4">
+                              <thead>
+                                <tr>
+                                  <th>No</th>
+                                  <th>Code</th>
+                                  <th>Name</th>
+                                  <th>Total Amount</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              @if(Auth::user()->is_special == 1)
+                              @foreach ($top_selling_items_all as $key => $items)
+                              <tr>
+                                <td>{{ $key+1 }}</td>
+                                <td>{{ $items->code }}</td>
+                                <td>{{ $items->name }}</td>
+                                <td>Ksh. {{ number_format($items->total) }}</td>
+                              </tr>
+                              @endforeach
+                              @else
+                              @foreach ($top_selling_items as $key => $items)
+                              <tr>
+                                <td>{{ $key+1 }}</td>
+                                <td>{{ $items->code }}</td>
+                                <td>{{ $items->name }}</td>
+                                <td>Ksh. {{ number_format($items->total) }}</td>
+                              </tr>
+                              @endforeach
+                              @endif
+                              </tbody>
+                            </table>
+                          </ul>
                         </div>
                         
                         

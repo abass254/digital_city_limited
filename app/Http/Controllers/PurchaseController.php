@@ -161,7 +161,7 @@ class PurchaseController extends Controller
             $stock = new Stock();
             $stock->prod_id = $request->product_id[$product_id];
             $stock->qty = $request->quantity[$product_id];
-            $stock->store_id = 0;
+            $stock->store_id = 5;
             $stock->status = 0;
             $stock->trans_id = $trans_id;
             $stock->save();
@@ -245,6 +245,7 @@ class PurchaseController extends Controller
         $cash_trans->t_date = Carbon::now()->format("d/m/Y");
         $cash_trans->t_description = "Purchases";
         $cash_trans->t_debit/**(profit) */ = 0;
+        $cash_trans->t_by/**(by) */ = Auth::user()->id;
         $cash_trans->t_credit/**(loss) */ = $cash_gross_amount;
         $cash_trans->t_balance = 0 - $cash_gross_amount ;
         $cash_trans->save();

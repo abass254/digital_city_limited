@@ -60,12 +60,21 @@ class QuotationController extends Controller
 
         $products = $prods->orderBy('code')->get();
 
+        $stocks = new Stock();
+
+        $stock = $stocks->select('store_id', DB::RAW('sum(qty) as total'), 'prod_id')
+        ->where('store_id', Auth::user()->branch)->where('status', '1')
+        ->groupBy('prod_id', 'store_id')
+        ->get();
+
+        //return $stock;
+
         $stores = Store::all();
 
         $clients  = Client::all();
 
 
-        return view('cash_sale.create', compact('products', 'stores', 'clients', 'orderCodes'));
+        return view('cash_sale.create', compact('products', 'stores', 'clients', 'orderCodes', 'stock'));
 
 
     }
@@ -78,6 +87,13 @@ class QuotationController extends Controller
 
         $prods = new ProductDetails;
 
+        $stocks = new Stock();
+
+        $stock = $stocks->select('store_id', DB::RAW('sum(qty) as total'), 'prod_id')
+        ->where('store_id', Auth::user()->branch)->where('status', '1')
+        ->groupBy('prod_id', 'store_id')
+        ->get();
+
         $products = $prods->orderBy('code')->get();
 
         $stores = Store::all();
@@ -85,7 +101,7 @@ class QuotationController extends Controller
         $clients  = Client::all();
 
 
-        return view('quotation.create', compact('products', 'stores', 'clients', 'orderCodes'));
+        return view('quotation.create', compact('products', 'stores', 'clients', 'orderCodes', 'stock'));
 
 
     }
@@ -229,6 +245,7 @@ class QuotationController extends Controller
            $cash_trans->t_description = "Cash Sale";
            $cash_trans->t_debit/**(profit) */ = $cash_gross_amount;
            $cash_trans->t_credit/**(loss) */ = 0;
+           $cash_trans->t_by/**(by) */ = Auth::user()->id;
            $cash_trans->t_balance = $cash_gross_amount - 0;
            $cash_trans->save();
     

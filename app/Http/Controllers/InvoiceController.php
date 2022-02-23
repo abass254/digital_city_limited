@@ -44,9 +44,15 @@ class InvoiceController extends Controller
         $stores = Store::all();
 
         $clients  = Client::all();
+        $stocks = new Stock();
+
+        $stock = $stocks->select('store_id', DB::RAW('sum(qty) as total'), 'prod_id')
+        ->where('store_id', Auth::user()->branch)->where('status', '1')
+        ->groupBy('prod_id', 'store_id')
+        ->get();
 
 
-        return view('invoice.create', compact('products', 'stores', 'clients', 'orderCodes'));
+        return view('invoice.create', compact('products', 'stores', 'clients', 'orderCodes', 'stock'));
     }
 
     public function store(Request $request){
@@ -255,6 +261,7 @@ class InvoiceController extends Controller
         $cash_trans->t_date = Carbon::now()->format("d/m/Y");
         $cash_trans->t_description = "Invoice Released";
         $cash_trans->t_debit/**(profit) */ = 0;
+        $cash_trans->t_by/**(by) */ = Auth::user()->id;
         $cash_trans->t_credit/**(loss) */ = $app_quots->total_amount;
         $cash_trans->t_balance =  0 - $app_quots->total_amount ;
         $cash_trans->save();
@@ -381,88 +388,18 @@ class InvoiceController extends Controller
         $t_code = 0;
         
         $new_code = null;
+        do {
+            $t_code ++;
+            $t_array = $cash_trans::where('t_no', 'LIKE', '%TRS-%'. $inv_code . '-P-' . $t_code)->get();
 
-       
-
-       // return $t_array;
-      
-
-       do {
-
-           $t_code ++;
-           
-
-           $t_array = $cash_trans::where('t_no', 'LIKE', '%TRS-%'. $inv_code . '-P-' . $t_code)->get();
-           
-           
-           if(count($t_array)==0){
-                
-              
-                $new_code = $current_code . '-P-'. $t_code;
+            if(count($t_array)==0){
+                    $new_code = $current_code . '-P-'. $t_code;
             }
-
-           
-           
-       } 
-       
-       while (!$new_code);
-
-
-
+        } 
         
-
-       // return $new_code;
-
-       // $current_code = $current_code . '-P'; 
-
-        //$orderCodes = 'QUOT-' . str_pad($current_code + 1, 4, "0", STR_PAD_LEFT);
-
-        // $i = 0;
-    
-        // $orderCodes =   str_pad($current_code .'-P-' . $i++ , 4, "0", STR_PAD_RIGHT/**/);
-
-        // while($i < count($current_code)){
-
-            
-        // }
-    
-    
-
-     //   return $orderCodes;
-
-        // for ($i =0; $i < count($current_code)  ; $i++) { 
-        
-        //      
-        // }
-
-        
-
-       // return $orderCodes; 
-
-        //$old_code = $cash_trans_all->first()->t_no;
-
-       // $i = 0;
-
-        // for ($i=0; $i < count($cash_trans_all); $i++) { 
-        //     # code...
-
-        //     $new_code = $cash_trans_all->t_no[$i] . '-' . $i++;
-        // }
-
-        // while($i < count($cash_trans_all)){
-
-        //      
-        // }
-
-        // return $new_code;
-
-
-
-
-      //  return $inv_id;
+        while (!$new_code);
 
         $inv_pay = new InvoicePayment();
-
         $inv_pay->inv_id = $inv_id;
         $inv_pay->amount_paid = $request->amount_paid;
         $inv_pay->save();
@@ -471,6 +408,7 @@ class InvoiceController extends Controller
         $cash_trans->t_no = $new_code;
         $cash_trans->t_date = Carbon::now()->format("d/m/Y");
         $cash_trans->t_description = "Invoice Paid";
+        $cash_trans->t_by/**(by) */ = Auth::user()->id;
         $cash_trans->t_debit/**(profit) */ = $request->amount_paid;
         $cash_trans->t_credit/**(loss) */ = 0;
         $cash_trans->t_balance =  $request->amount_paid;
@@ -488,15 +426,16 @@ class InvoiceController extends Controller
 
     }
 
-    public function test($date){
+    public function test(){
+
+        $profit_per_store = DB::table('cash_transactions as ct')->select(DB::RAW('sum(ct.t_balance) as net_profit'))->groupBy('ct.t_by')->where('ct.t_by', Auth::user()->id)->first();
+
+        $total_profit_per_store = $profit_per_store->net_profit;
+
+        return $total_profit;
 
         
 
-        $date = new \DateTime($date);
-        $now = new \DateTime();
-        $interval = $now->diff($date);
-
-        return $interval->y;
 
     }
 }

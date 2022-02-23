@@ -1,0 +1,167 @@
+.badge.badge-black {
+  background-color: #000;
+}
+i.feather.td-action {
+    font-size: 1.3em;
+}
+.pointer {
+    cursor: pointer;
+}
+.boxed-shadow {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
+}
+body.vertical-layout.vertical-menu-modern.menu-collapsed .header-navbar.floating-nav {
+    width: calc(100vw - (100vw - 100%) - 4.4rem - 15px);
+}
+html body .content .content-wrapper {
+    margin-top: 4rem;
+}
+.main-menu .navbar-header .navbar-brand .brand-logo {
+    background: url("/images/logo/logo.png") no-repeat;
+    background-size: 35px auto;
+    height: 50px;
+    width:35px;
+    background-position: 0 0;
+}
+.main-menu .navbar-header .navbar-brand .brand-text {
+    animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+    background: url("/images/logo/logo-half.png") no-repeat;
+    background-size: auto 38px;
+    height: 38px;
+    background-position: 6px 0;
+    width:100px;
+}
+.nav .modern-nav-toggle {
+    padding: 10px 0;
+}
+table.dataTable th.dt-nowrap,
+table.dataTable td.dt-nowrap {
+    white-space: nowrap;
+}
+a.buy-now.vs-button {
+    box-shadow: 0 1px 20px 1px #fb434f;
+    padding: 0.65rem 1.5rem;
+    background: #fb434f;
+    color: #fff;
+    border-radius: 6px;
+}
+section.top-side-up,
+div.top-side-up {
+    margin-top: -20px!important;
+}
+fieldset .form-control-position {
+    top: 22px;
+}
+fieldset div.error {
+    color: #f00;
+    font-size: 0.7em;
+    margin-top: 7px;
+    padding-left: 15px;
+}
+.blue-text {
+    color: #0000ff !important;
+}
+.blue-text.lighten {
+    color: #6f80ff !important;
+}
+.bold-text {
+    font-weight: bold;
+}
+.inline-block{
+    display: inline-block;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+.triage-header h4 {
+    color: #636363;
+}
+
+.strike-through {
+    text-decoration: line-through;
+    color: red;
+}
+
+.pink {
+    color: #ea5455;
+}
+.bullet.bullet-grey {
+    background-color: #8b9cac;
+}
+.bullet.bullet-mild {
+    background-color: #99c728;
+}
+.bullet.bullet-yellow {
+    background-color: #ffff00;
+}
+.wd-01 {
+    width: 1px;
+}
+.wd-50 {
+    width: 50px;
+}
+.wd-55{
+    width: 55px;
+}
+.wd-60 {
+    width: 60px;
+}
+.wd-65 {
+    width: 65px;
+}
+.wd-70 {
+    width: 70px;
+}
+.wd-75 {
+    width: 75px;
+}
+.wd-80 {
+    width: 80px;
+}
+.wd-85 {
+    width: 85px;
+}
+.wd-90 {
+    width: 90px;
+}
+.wd-95 {
+    width: 95px;
+}
+.wd-100 {
+    width: 100px;
+}
+.wd-110 {
+    width: 110px;
+}
+.wd-120 {
+    width: 120px;
+}
+.wd-130 {
+    width: 130px;
+}
+.wd-140 {
+    width: 140px;
+}
+.wd-150 {
+    width: 150px;
+}
+.wd-160 {
+    width: 160px;
+}
+.wd-170 {
+    width: 170px;
+}
+.wd-180 {
+    width: 180px;
+}
+.wd-190 {
+    width: 190px;
+}
+.wd-200 {
+    width: 200px;
+}
+
+

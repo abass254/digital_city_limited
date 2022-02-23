@@ -1,55 +1,52 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google.">
-    <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template, eCommerce dashboard, analytic dashboard">
-    <meta name="author" content="ThemeSelect">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <link rel="apple-touch-icon" href="~/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link rel="apple-touch-icon" href="../../../app-assets/images/favicon/apple-touch-icon-152x152.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/favicon/favicon-32x32.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- BEGIN: VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/vendors.min.css">
-    <!-- END: VENDOR CSS-->
-    <!-- BEGIN: Page Level CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/vertical-modern-menu-template/materialize.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/vertical-modern-menu-template/style.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/login.css">
-    <!-- END: Page Level CSS-->
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/custom/custom.css">
+    <!--Layout Stylesheets-->
+    <link rel="stylesheet" type="text/css" href="../../vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendors/css/extensions/toastr.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../css/components.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/semi-dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../../css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="../../css/plugins/extensions/toastr.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet newest" type="text/css" href="../../css/style.custom.css">
+    @yield('css')
 </head>
-<body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 1-column login-bg blank-page blank-page" data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
-   
-    <div class="row">
-        <div class="col s12">
-            <div class="container">
-                <div id="login-page" class="row">
-                    <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
-                        @yield('content')
-                    </div>
-                </div>
+    <body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static menu-collapsed bg-full-screen-image" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+        <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+                <!--Layout Scripts-->
+                <script src="../../vendors/js/signalr/signalr.js"></script>
+                <script src="../../js/wise-erp-core.js"></script>
+
+                <script src="../../vendors/js/vendors.min.js"></script>
+                <script src="../../vendors/js/extensions/toastr.min.js"></script>
+                <script src="../../js/core/app-menu.js"></script>
+                <script src="../../js/core/app.js"></script>
+                <script src="../../js/scripts/components.js"></script>
+
+                <!--Render Body-->
+                @yield('content')
             </div>
         </div>
-    </div>    
-       <!--  <main class="py-4">
-            
-        </main> -->
-</body>
+
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+        @yield('js')
+    </body>
 </html>

@@ -29,14 +29,14 @@ class StockController extends Controller
     public function getPendingDispatches(){
 
         $dispatches = DB::table('product_details')
-            ->join('stocks', 'product_details.id', '=', 'stocks.prod_id')->join('stores', 'stores.id', '=', 'stocks.store_id')
+            ->join('stocks', 'product_details.id', '=', 'stocks.prod_id')->join('stores', 'stores.id', '=', 'stocks.store_id')->join('transactions', 'stocks.trans_id', 'transactions.id')
             ->select(DB::RAW('product_details.code AS code'),
                     DB::RAW('stocks.prod_id AS prod_id'),
                     DB::RAW('stocks.id AS stock_id'),
                     DB::RAW('product_details.name AS product_name'),
                     DB::RAW('stores.store_name AS store_name'),
                     DB::RAW('stocks.qty AS quantity'),
-                    DB::RAW('stocks.*'))->where('stocks.status', '=', '0')->get();
+                    DB::RAW('stocks.*'))->where('stocks.status', '=', '0')->where('transactions.trans_desc', 'LIKE', '%Dispatch%')->get();
 
 
        return view('dispatch.pending_dispatches', compact('dispatches'));
