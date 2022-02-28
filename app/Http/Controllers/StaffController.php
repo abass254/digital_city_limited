@@ -21,7 +21,7 @@ class StaffController extends Controller
 
 
 
-        $users = User::paginate(1);
+        $users = User::all();
 
         return view('user.list_users', compact('users'));
     }

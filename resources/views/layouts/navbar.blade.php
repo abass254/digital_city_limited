@@ -115,6 +115,8 @@
                             <ul class="dropdown-content dropdown-horizontal-list" id="TemplatesDropdown">
                                 <li><a href="{{ route('transaction.index') }}"><span data-i18n="Modern Menu">Cash Transactions</span></a>
                                 </li>
+                                <li><a href=""><span data-i18n="Modern Menu">Clients Cash Flow</span></a>
+                                </li>
                                 <li class=""><a class="" href="{{ route('purchase.create') }}"><span data-i18n="Analytics">Make Purchases</span></a>
                                 </li>
                                 <li class=""><a class="" href="{{ route('view_lpo') }}"><span data-i18n="Analytics">View LPO's</span></a>

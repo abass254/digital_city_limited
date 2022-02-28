@@ -23,13 +23,13 @@
 
                     <div class="card-content">
                         <p>
-                            <a href="{{ route('staff.create') }}" class="mb-6 btn-floating waves-effect waves-light gradient-45deg-red-teal gradient-shadow">
+                            <a href="{{ route('client.create') }}" class="mb-6 btn-floating waves-effect waves-light gradient-45deg-red-teal gradient-shadow">
                               <i class="material-icons">add</i>
                             </a>
                           </p>
                         <h3>List of Clients</h3>
 
-                        <table class="display" id="page-length-option">
+                        <table class="display" id="page-lenth-option">
                             <thead>
                             <tr class="cyan-text">
                                 <th>No</th>

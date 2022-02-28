@@ -22,7 +22,7 @@
                             <!-- Modal Trigger -->
                               
                           </p>
-                        <h3>List of Product Details</h3>
+                        <h3>List of Pending Purchases</h3>
 
                         <table class="display" id="page-ength-option">
                             <thead>
@@ -32,6 +32,7 @@
                                 <th>Name</th>
                                 <th>Quantity</th>
                                 <th>Dispatched To</th>
+                                <th>Date Created</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -50,6 +51,7 @@
                                 <td>{{ $product->product_name }}</td>
                                 <td>{{ $product->quantity }}</td>
                                 <td>{{ $product->store_name }}</td>
+                                <td>{{ $product->date_created }}</td>
                                 
                             </tr>
                            

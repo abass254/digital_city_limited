@@ -42,8 +42,6 @@
                                 <th>NHIF No</th>
                                 <th>NSSF No</th>
                                 <th>ID Number</th>
-                                <th>Role</th>
-                                <th>Store Assigned</th>
                                 <th>Date Assigned</th>
                                 <th></th>
                             </tr>
@@ -59,8 +57,6 @@
                                 <td>{{ $user->nhif_no }}</td>
                                 <td>{{ $user->nssf_no }}</td>
                                 <td>{{ $user->id_number }}</td>
-                                <td>{{ $user->role ?? 'Not Assigned' }}</td>
-                                <td>{{ $user->branch ?? 'Not Assigned' }}</td>
                                 <td>{{ $user->date_assigned ?? 'Not Assigned' }}</td>
                                 <td>
                                     
@@ -84,7 +80,6 @@
 
 
                         </table>
-                        {{$users->links('vendor.pagination.materializecss')}}
                     </div>
 
                 </div>

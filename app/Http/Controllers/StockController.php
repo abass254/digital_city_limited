@@ -33,11 +33,14 @@ class StockController extends Controller
             ->select(DB::RAW('product_details.code AS code'),
                     DB::RAW('stocks.prod_id AS prod_id'),
                     DB::RAW('stocks.id AS stock_id'),
+                    DB::RAW("DATE_FORMAT(stocks.created_at, '%e/%c/%Y') as date_created"),
                     DB::RAW('product_details.name AS product_name'),
                     DB::RAW('stores.store_name AS store_name'),
-                    DB::RAW('stocks.qty AS quantity'),
-                    DB::RAW('stocks.*'))->where('stocks.status', '=', '0')->where('transactions.trans_desc', 'LIKE', '%Dispatch%')->get();
+                    DB::RAW('stocks.qty AS quantity')
+                    ,DB::RAW('stocks.*')
+                    )->where('stocks.status', '=', '0')->where('transactions.trans_desc', 'LIKE', '%Dispatch%')->orderBy('date_created')->get();
 
+        //return $dispatches;//->date_created;
 
        return view('dispatch.pending_dispatches', compact('dispatches'));
 
@@ -51,7 +54,7 @@ class StockController extends Controller
 
         $products = $prods->orderBy('code')->get();
 
-        $stores = Store::all();
+        $stores = Store::where('status', '1')->get();
 
         return view('product.dispatch', compact('products', 'stores'));
     }
